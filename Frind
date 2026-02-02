@@ -1,0 +1,62 @@
+#include <iostream>
+using namespace std;
+
+class AccountManager;   // Forward declaration
+
+class BankAccount
+{
+private:
+    double balance;   // Private data member
+
+public:
+    // Constructor
+    BankAccount(double bal)
+    {
+        balance = bal;
+    }
+
+    // Declare AccountManager as friend
+    friend class AccountManager;
+};
+
+class AccountManager
+{
+public:
+    void displayBalance(BankAccount &acc)
+    {
+        cout << "Account Balance: " << acc.balance << endl;
+    }
+
+    void addMoney(BankAccount &acc, double amount)
+    {
+        acc.balance += amount;
+        cout << "Money Added Successfully!" << endl;
+    }
+
+    void deductMoney(BankAccount &acc, double amount)
+    {
+        if (amount <= acc.balance)
+        {
+            acc.balance -= amount;
+            cout << "Money Deducted Successfully!" << endl;
+        }
+        else
+        {
+            cout << "Insufficient Balance!" << endl;
+        }
+    }
+};
+
+int main()
+{
+    BankAccount account(5000);      // Object of BankAccount
+    AccountManager manager;         // Object of AccountManager
+
+    manager.displayBalance(account);
+    manager.addMoney(account, 2000);
+    manager.displayBalance(account);
+    manager.deductMoney(account, 3000);
+    manager.displayBalance(account);
+
+    return 0;
+}
